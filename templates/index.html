@@ -1,0 +1,145 @@
+{% extends "main_layout.html" %} {% block content %} {% if pesan_error=="aktif" %}
+<script>
+    alert('user tidak tersedia');
+</script>
+{% endif %}
+
+<!-- end s-services -->
+<!-- CTA
+    ================================================== -->
+<section id="rekomendasi" name="rekomendasi" class="s-cta ss-dark">
+    <!-- <section id="rekomendasi" class="s-services ss-dark target-section"> -->
+    <!-- <section id="rekomendasi" name="rekomendasi" class="s-cta ss-dark"> -->
+    <!-- <section id="rekomendasi" class="s-services s-cta ss-dark target-section"> -->
+    <div class="row heading-block heading-block--center mb-2" data-aos="fade-up">
+        <div class="column large-full">
+            <p class="section-desc">Metode</p>
+            <!-- <h2 class="section-heading section-heading--centerbottom">Metode <i>Hybrid Collaborative Filtering</i></h2> -->
+            <!-- <h1 class="section-heading section-heading--centerbottom">Metode <i>Hybrid-based Collaborative Filtering</i></h1> -->
+            <h1 class="section-heading section-heading--centerbottom">Metode <i>Hybrid</i></h1>
+            <div class="column item-service" data-aos="fade-up">
+                <div class="item-service__content">
+                    <p>
+                        Metode yang dipakai adalah metode <b style="color: white"><i>Hybrid</i> [1]</b> dimana metode ini mengkombinasikan antara metode <b style="color: white"><i>User-based Collaborative Filtering </i></b>
+                        dan <b style="color: white"><i>Item-based Collaborative Filtering </i></b> dengan
+                        menggunakan <b style="color: white"><i> Similarity Function </i>Kategori <i>Probabilistic</i></b> yaitu <b style="color: white"><i>Mutual Information</i> (MI) [1], <i>Adjusted Mutual Information</i> (AMI) [2], <i>Bhattacharyya Coefficient</i> (BC) [3], <i>Kullback-Leibler</i> (KL) [4]. </b> Dataset yang digunakan dalam penelitian ini adalah
+                        dataset
+                        <b style="color: white"> <a target="_blank" href="https://grouplens.org/datasets/movielens/100k/"> MovieLens-100K</a></b>
+                        dimana data yang digunakan adalah data rating user terhadap item. Alur dari algortima yang dipakai digambarkan pada gambar pada gambar dibawah ini.
+                    </p>
+                </div>
+            </div>
+            <div class="mb-5" data-aos="fade-up" style="background-color: aliceblue; max-width: 700px; margin: auto">
+                <img src="{{ url_for('static', filename='images/IPO-sistem.png') }}" alt="IPo" />
+            </div>
+        </div>
+    </div>
+    <div class="row heading-block heading-block--center mt-5" data-aos="fade-up">
+        <div class="column large-full">
+            <h2 class="section-heading section-heading--centerbottom">SIlahkan pilih metode yang akan digunakan</h2>
+        </div>
+    </div>
+    <div style="color: white; margin: auto" class="mt-5">
+        <form action="metode" method="get">
+            <div class="row">
+                <div class="columns" style="margin: auto">
+                    <label for="user" style="color: aliceblue; font-size: large">Pilih Similarity untuk User-based</label>
+                    <select name="user-based" id="user-based" style="color: aliceblue; margin: auto; background-color: black;  font-size: large"">
+                        {% for key, metode in metodes.items() %}
+                        <option value="{{ key }}">{{ metode }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div>
+                <button type="submit">Rekomendasi</button>
+            </div>
+        </form>
+    </div>
+    
+</section>
+<!-- end s-cta -->
+
+<section id="about" class="s-about target-section">
+    <div class="about-me">
+        <div class="row heading-block heading-block--center" data-aos="fade-up">
+            <div class="column large-full">
+                <p class="section-desc">Tentang Aplikasi</p>
+            </div>
+        </div>
+        <div class="row heading-block" data-aos="fade-up">
+            <div class="column large-full">
+                <h2 class="section-headingl section-headingl--leftbottom">Tentang Aplikasi</h2>
+            </div>
+        </div>
+        <div class="row about-me__content" data-aos="fade-up">
+            <div class="column large-full about-me__text" style="text-align: justify">
+                <p class="lead">
+                    Aplikasi ini merupakan prototipe penelitian yang dilakukan oleh kami. Pengguna dapat memilih user yang ingin direkomendasikan oleh aplikasi yang nantinya akan menampilkan hasil dari rekomendasi film untuk user yang telah
+                    dipilih.
+                </p>
+
+                <p class="lead">
+                    Aplikasi ini menggunakan algoritma <b><i>Hybrid</i></b> dimana metode ini mengkombinasikan antara metode <b><i>User-based Collaborative Filtering </i></b>
+                    dan <b><i>Item-based Collaborative Filtering </i></b> dengan
+                    menggunakan <b><i> Similarity Function </i>Kategori <i>Probabilistic</i></b> yaitu <b><i>Mutual Information</i> (MI) [1], <i>Adjusted Mutual Information</i> (AMI) [2], <i>Bhattacharyya Coefficient</i> (BC) [3], <i>Kullback-Leibler</i> (KL) [4].</b>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- end about-me -->
+
+    <div class="about-experience">
+        <div class="row heading-block" data-aos="fade-up">
+            <div class="column large-full">
+                <h2 class="section-headingl section-headingl--leftbottom">Tim Pengembang Aplikasi</h2>
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-around">
+            <div class="card col-3" data-aos="fade-up" style="width: 30rem">
+                <!-- <div class="col-3"> -->
+                <img class="card-img" height="60%" src="https://avatars.githubusercontent.com/u/78505598" alt="Card image cap" />
+                <div class="card-body text-reset">
+                    <h5 class="card-title">Ahmad Farisul Haq</h5>
+                    <div class="card-text" style="color: black">contact:</div>
+                    <a target="_blank" href="mailto:ahmadfarisulhaqq@gmail.com" class="text-reset">
+                        <i class="fas fa-solid fa-envelope fa-lg "></i>
+                        ahmadfarisulhaqq@gmail.com
+                    </a>
+                </div>
+            </div>
+
+            <div class="card col-3" data-aos="fade-up" style="width: 30rem">
+                <!-- <div class="col-3"> -->
+                <img class="card-img-top" src="https://trunojoyoan.com/rekomendasihotel/static/assets/img/team/ibu_Ifada.jpg" alt="Card image cap" />
+                <div class="card-body">
+                    <h5 class="card-title">Dr. Noor Ifada, S.T., MISD.</h5>
+                    <div class="card-text" style="color: black">contact:</div>
+                    <a href="mailto:noor.ifada@trunojoyo.ac.id">
+                        <i class="fas fa-solid fa-envelope fa-lg"></i>
+                        noor.ifada@trunojoyo.ac.id
+                    </a>
+                </div>
+            </div>
+            <div class="card col-3" data-aos="fade-up" style="width: 30rem">
+                <!-- <div class="col-3"> -->
+                <img class="card-img-top" src="http://teknik.trunojoyo.ac.id/wp-content/uploads/2023/10/Indah.png" alt="Card image cap" />
+                <div class="card-body">
+                    <h5 class="card-title">Dr. Indah Agustien Siradjuddin, S.Kom., M.Kom</h5>
+                    <div class="card-text" style="color: black">contact:</div>
+                    <a href="mailto:noor.ifada@trunojoyo.ac.id">
+                        <i class="fas fa-solid fa-envelope fa-lg"></i>
+                        indah.siradjuddin@trunojoyo.ac.id
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end about-experience -->
+    <!-- {{ result }} -->
+</section>
+<!-- end s-about -->
+
+{% endblock %}
