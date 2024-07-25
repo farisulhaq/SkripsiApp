@@ -10,7 +10,6 @@ from metode.sistemRekomendasi import *
 from metode.matrikEvaluasi import *
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = '192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcbf'
 
 path = ''  # local
 # path = '/home/farsulhaq/mbkm'  # hosting
@@ -138,10 +137,6 @@ def rekomendasi_page():
     eDcg = round(dcg(ground_truth=gt, topN=topN, n=tetangga), 4)
     eNdcg = round(ndcg(ground_truth=gt, topN=topN, n=tetangga), 4)
 
-    session.clear()
-    session['rekomendasi'] = {"user": id_user, "dataTrain": dataTrain, "nameTopN": nameTopN, "dataGroundTruth": dataGroundTruth,
-                              "dataIrisan": dataIrisan, "ePrecision": ePrecision, "eRecall": eRecall, "eFscore": eFscore, "eDcg": eDcg, "eNdcg": eNdcg}
-
     return render_template("hasilrekomendasi.html", metod_user=metod_user, metod_item=metod_item, navnya=navnya, judulnya=judulnya, user=id_user, tetangga=tetangga, banyak_data_rekomendasi=tetangga, top_n=nameTopN)
 
 
@@ -149,12 +144,57 @@ def rekomendasi_page():
 def metrik_evaluasi_page():
     navnya = ["Home", "", "Metrik Evaluasi"]
     judulnya = "Hasil Rekomendasi"
-    hasilRekomendasi = session.get('rekomendasi')
-    print(hasilRekomendasi)
-    if hasilRekomendasi is None:
-        # @app.route("/")
+    
+    id_user = int(request.args.get('user'))
+    tetangga = int(request.args.get("tetangga"))
+    metod_user = (request.args.get('metod_user'))
+    metod_item = (request.args.get('metod_item'))
+
+    if id_user not in banyak_users:
         return redirect("/")
-    return render_template("metrik_evaluasi.html", navnya=navnya, judulnya=judulnya, user=hasilRekomendasi["user"], data_train=hasilRekomendasi["dataTrain"], data_irisan=hasilRekomendasi["dataIrisan"], data_ground_truth=hasilRekomendasi["dataGroundTruth"], top_n=hasilRekomendasi["nameTopN"], precision=hasilRekomendasi["ePrecision"], recall=hasilRekomendasi["eRecall"], f1=hasilRekomendasi["eFscore"], dcg=hasilRekomendasi["eDcg"], ndcg=hasilRekomendasi["eNdcg"])
+    # User
+    metode_usernya = nameMetode[metod_user.lower()]
+    mean_user_df, mean_centered_user_df, similarity_user_df = joblib.load(
+        os.path.join(path, 'model', metod_user.lower(), 'user_k1.joblib'))
+
+    # Item
+    metode_itemnya = nameMetode[metod_item.lower()]
+    mean_item_df, mean_centered_item_df, similarity_item_df = joblib.load(
+        os.path.join(path, 'model', metod_item.lower(), 'item_k1.joblib'))
+    # tetanggaU
+    tetanggaU = baseMetode[metod_user.lower(
+    )+'-'+metod_item.lower()]['tetanggaU']
+    # tetanggaI
+    tetanggaI = baseMetode[metod_user.lower(
+    )+'-'+metod_item.lower()]['tetanggaI']
+    # r1
+    r1 = baseMetode[metod_user.lower()+'-'+metod_item.lower()]['r1']
+    # rekomendasi
+    sr = sistemRekomendasi(rating_matrix, mean_user_df, mean_centered_user_df, similarity_user_df, mean_item_df,
+                           mean_centered_item_df, similarity_item_df, user=id_user, tetanggaU=tetanggaU, tetanggaI=tetanggaI, r1=r1)
+
+    gt = ratings_test[ratings_test['user_id']
+                      == id_user].loc[:, 'item_id'].tolist()
+    topN = sr[(-sr[:, 1].astype('float')).argsort()][:, 0][:tetangga]
+
+    nameTopN = movie_data.loc[(topN), 'movie_title'].tolist()
+
+    # datatrain
+    dataTrain = movie_data.loc[rating_matrix.loc[id_user, :]
+                               != 0.0, 'movie_title'].tolist()
+    # datagroundtruth
+    dataGroundTruth = movie_data.loc[gt, 'movie_title'].tolist()
+    # datairisan
+    dataIrisan = np.intersect1d(nameTopN, dataGroundTruth).tolist()
+    print(dataIrisan)
+    ePrecision = round(
+        precision(ground_truth=gt, topN=topN, n=tetangga), 4)
+    eRecall = round(recall(ground_truth=gt, topN=topN, n=tetangga), 4)
+    eFscore = round(f1Score(ground_truth=gt, topN=topN, n=tetangga), 4)
+    eDcg = round(dcg(ground_truth=gt, topN=topN, n=tetangga), 4)
+    eNdcg = round(ndcg(ground_truth=gt, topN=topN, n=tetangga), 4)
+
+    return render_template("metrik_evaluasi.html", navnya=navnya, judulnya=judulnya, user=id_user, data_train=dataTrain, data_irisan=dataIrisan, data_ground_truth=dataGroundTruth, top_n=nameTopN, precision=ePrecision, recall=eRecall, f1=eFscore, dcg=eDcg, ndcg=eNdcg)
 
 
 if __name__ == "__main__":
