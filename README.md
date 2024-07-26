@@ -1,11 +1,10 @@
 # Aplikasi Sistem Rekomendasi Film Berbasis Hybrid Kombinasi Metode User-based dan Item-based
 
-
 <details>
 
 <!-- ## Table of Contents -->
 
-<summary>Table of Contents</summary> 
+<summary>Table of Contents</summary>
 
 - [Description](#description)
 - [Installtion](#installtion)
@@ -22,7 +21,7 @@
 ## Description
 
 <div align="justify">
-Aplikasi Sistem Rekomendasi Film Berbasis Hybrid Kombinasi Metode User-based dan Item-based – Aplikasi ini adalah prototipe yang mensimulasikan kerja dan analisa dari sistem rekomendasi. Hybrid yang dimaksud yaitu mengkombinasikan antara metode User-based Collaborative Filtering (UCF) dan metode Item-based Collaborative Filtering (ICF) dengan menggunakan kombinasi similarity function Pearson Correlation Coefficient (PCC), atau Adjusted Mutual Information (AMI) yang diterapkan pada dataset MovieLens 100K. Pengguna aplikasi dapat melihat hasil rekomendasi sesuai dengan jumlah top-n rekomendasi dari user target yang dipilih serta dapat melihat evaluasi berdasarkan metrik Recall, Precision, Discounted Cumulative Gain (DCG), dan Normalized Discounted Cumulative Gain (NCDG) dari hasil rekomendasi.
+Aplikasi Sistem Rekomendasi Film Berbasis Hybrid Kombinasi Metode User-based dan Item-based – Aplikasi ini adalah prototipe yang mensimulasikan kerja dan analisa dari sistem rekomendasi. Hybrid yang dimaksud yaitu mengkombinasikan antara metode User-based Collaborative Filtering (UCF) dan metode Item-based Collaborative Filtering (ICF) dengan menggunakan similarity function kategori probabilistic (Mutual Information (MI), Adjusted Mutual Information (AMI), Bhattacharyya Coefficient (BC), dan Kullback-Leibler (KL)) yang diterapkan pada dataset MovieLens 100K. Pengguna aplikasi dapat melihat hasil rekomendasi sesuai dengan jumlah Top-N rekomendasi dari user target yang dipilih serta dapat melihat evaluasi berdasarkan metrik Recall, Precision, Discounted Cumulative Gain (DCG), dan Normalized Discounted Cumulative Gain (NCDG) dari hasil rekomendasi.
 </div>
 
 <hr>
@@ -32,13 +31,13 @@ Aplikasi Sistem Rekomendasi Film Berbasis Hybrid Kombinasi Metode User-based dan
 ### Clone the project
 
 ```bash
-  git clone https://github.com/farisulhaq/MBKM.git
+  git clone https://github.com/farisulhaq/SkripsiApp.git skripsiApp
 ```
 
 ### Go to the project directory
 
 ```bash
-  cd MBKM
+  cd skripsiApp
 ```
 
 ### Install dependencies
@@ -49,8 +48,8 @@ Aplikasi Sistem Rekomendasi Film Berbasis Hybrid Kombinasi Metode User-based dan
   pip install -r requirements.txt
 ```
 
-
 ## Tests
+
 before performing the tests, please check the path variable in the app.py file.
 
 To run tests, run the following command
@@ -61,4 +60,4 @@ To run tests, run the following command
 
 ## Demo
 
-[farsulhaq.pythonanywhere.com](https://farsulhaq.pythonanywhere.com/)
+[Click Me](https://jodfeza.sga.dom.my.id/)
